@@ -1,0 +1,6 @@
+{
+  "name": "AutoHub – Premium Car Marketplace",
+  "description": "Drive Your Dream. Explore, compare, and discover luxury and electric vehicles from trusted dealers with AutoHub.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
