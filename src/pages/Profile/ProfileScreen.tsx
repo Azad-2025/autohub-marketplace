@@ -14,9 +14,12 @@ import {
   X,
   Heart,
   Warehouse,
-  Scale
+  Scale,
+  Download,
+  CheckCircle2
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
+import { usePWA } from '../../hooks/usePWA';
 
 export const ProfileScreen: React.FC = () => {
   const {
@@ -28,8 +31,11 @@ export const ProfileScreen: React.FC = () => {
     favorites,
     garage,
     compareList,
-    showToast
+    showToast,
+    openInstallModal
   } = useApp();
+
+  const { isStandalone } = usePWA();
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [name, setName] = useState(user.name);
@@ -142,6 +148,38 @@ export const ProfileScreen: React.FC = () => {
             <MapPin size={15} className="text-[#50A8FF] shrink-0" />
             <span>{user.location}</span>
           </div>
+        </div>
+
+        {/* PWA Mobile App Installation Section matching prompt requirements */}
+        <div className="p-4 rounded-2xl bg-gradient-to-br from-[#102943] to-[#0B1D31] border border-[rgba(150,190,255,0.22)] shadow-lg relative overflow-hidden">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <div className="flex items-center gap-2">
+                <Smartphone size={16} className="text-[#50A8FF]" />
+                <h3 className="text-xs font-bold text-white uppercase tracking-wider">
+                  Mobile Application
+                </h3>
+              </div>
+              <p className="text-[11px] text-[#A8B9CC] mt-1.5 leading-snug">
+                Install our app for a better mobile experience.
+              </p>
+            </div>
+
+            {isStandalone && (
+              <span className="px-2.5 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 text-[10px] font-bold flex items-center gap-1 shrink-0">
+                <CheckCircle2 size={12} />
+                <span>Installed</span>
+              </span>
+            )}
+          </div>
+
+          <button
+            onClick={openInstallModal}
+            className="w-full mt-3.5 py-3 px-4 rounded-xl bg-gradient-to-r from-[#237BFF] to-[#1E62D0] hover:from-[#3A8BFF] hover:to-[#2470E8] text-white font-semibold text-xs flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(35,123,255,0.35)] active:scale-95 transition-all cursor-pointer border border-[#80BFFF]/30"
+          >
+            <Download size={15} />
+            <span>Install AutoHub</span>
+          </button>
         </div>
 
         {/* Settings & Preferences */}

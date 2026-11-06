@@ -53,6 +53,9 @@ interface AppContextType {
   resetFilters: () => void;
   isFilterModalOpen: boolean;
   setIsFilterModalOpen: (open: boolean) => void;
+  isInstallModalOpen: boolean;
+  setIsInstallModalOpen: (open: boolean) => void;
+  openInstallModal: () => void;
   viewLayout: ViewLayout;
   setViewLayout: (layout: ViewLayout) => void;
   toasts: Toast[];
@@ -219,6 +222,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // Filter state
   const [filters, setFilters] = useState<FilterState>(defaultFilters);
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+  const [isInstallModalOpen, setIsInstallModalOpen] = useState(false);
+
+  const openInstallModal = () => setIsInstallModalOpen(true);
 
   // Toasts
   const [toasts, setToasts] = useState<Toast[]>([]);
@@ -508,6 +514,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         resetFilters,
         isFilterModalOpen,
         setIsFilterModalOpen,
+        isInstallModalOpen,
+        setIsInstallModalOpen,
+        openInstallModal,
         viewLayout,
         setViewLayout,
         toasts,

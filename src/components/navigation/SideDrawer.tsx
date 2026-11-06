@@ -14,7 +14,8 @@ import {
   Columns,
   LogIn,
   ChevronRight,
-  ShieldCheck
+  ShieldCheck,
+  Download
 } from 'lucide-react';
 import { useApp, ScreenId } from '../../context/AppContext';
 import { AutoHubLogo } from '../common/BrandEmblems';
@@ -31,7 +32,8 @@ export const SideDrawer: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
     favorites,
     compareList,
     garage,
-    user
+    user,
+    openInstallModal
   } = useApp();
 
   if (!isOpen) return null;
@@ -175,6 +177,20 @@ export const SideDrawer: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
               </button>
             );
           })}
+        </div>
+
+        {/* Quick Install Action in Drawer */}
+        <div className="p-4 border-t border-[rgba(150,190,255,0.12)]">
+          <button
+            onClick={() => {
+              onClose();
+              openInstallModal();
+            }}
+            className="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#237BFF] to-[#1E62D0] hover:from-[#3A8BFF] text-white text-xs font-semibold flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(35,123,255,0.4)] cursor-pointer"
+          >
+            <Download size={15} />
+            <span>Install AutoHub App</span>
+          </button>
         </div>
 
         {/* Footer */}

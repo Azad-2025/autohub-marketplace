@@ -59,6 +59,14 @@
   - Interactive chat interface with message stream.
   - Automated intelligent response simulation confirming viewing availability.
 
+- **📱 Progressive Web App (PWA) Mobile Experience**:
+  - Direct installation to Android home screen via native `beforeinstallprompt` flow.
+  - Guided 4-step iOS Safari installation modal.
+  - Offline asset precaching and runtime caching via Workbox and `vite-plugin-pwa`.
+  - Non-intrusive offline connectivity indicator when network drops.
+  - In-app service worker update prompt (*"New AutoHub Update Available"*) with safe refresh.
+  - Dismissable installation banner on Home screen and permanent Install option in Profile & Drawer.
+
 - **👤 User Profile & Settings**:
   - Member verification badge, membership duration, and contact details.
   - Editable profile modal.
@@ -74,6 +82,7 @@
 
 - **Framework**: [React 19](https://react.dev/) + [TypeScript 5](https://www.typescriptlang.org/)
 - **Bundler & Dev Server**: [Vite 8](https://vitejs.dev/) with native ES module loading
+- **PWA Tooling**: [vite-plugin-pwa](https://vite-pwa-org.netlify.app/) + [Workbox](https://developer.chrome.com/docs/workbox/)
 - **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) with custom dark navy glass design tokens
 - **Icons**: [Lucide React](https://lucide.dev/)
 - **Animations**: [Motion](https://motion.dev/)

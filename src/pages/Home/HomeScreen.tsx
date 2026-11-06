@@ -16,6 +16,8 @@ import {
 import { useApp } from '../../context/AppContext';
 import { FEATURED_BRANDS, CAR_CATEGORIES } from '../../data/cars';
 import { BrandLogo } from '../../components/common/BrandEmblems';
+import { usePWA } from '../../hooks/usePWA';
+import { InstallBanner } from '../../components/pwa/InstallBanner';
 
 export const HomeScreen: React.FC = () => {
   const {
@@ -27,8 +29,11 @@ export const HomeScreen: React.FC = () => {
     filteredCars,
     toggleFavorite,
     isFavorite,
-    showToast
+    showToast,
+    openInstallModal
   } = useApp();
+
+  const { isStandalone, isBannerDismissed, dismissBanner } = usePWA();
 
   const [searchInput, setSearchInput] = useState(filters.query);
   const [activeBannerSlide, setActiveBannerSlide] = useState(0);
@@ -118,6 +123,14 @@ export const HomeScreen: React.FC = () => {
           <SlidersHorizontal size={18} />
         </button>
       </form>
+
+      {/* Progressive Web App Install Banner (dismissable) */}
+      {!isStandalone && !isBannerDismissed && (
+        <InstallBanner
+          onInstallClick={openInstallModal}
+          onDismiss={dismissBanner}
+        />
+      )}
 
       {/* Hero Banner matching reference screenshot */}
       <div className="relative rounded-3xl bg-gradient-to-br from-[#102943] via-[#0B1D31] to-[#071525] border border-[rgba(150,190,255,0.22)] p-5 overflow-hidden shadow-xl">

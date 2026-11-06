@@ -17,6 +17,10 @@ import { MessagesScreen } from './pages/Messages/MessagesScreen';
 import { ProfileScreen } from './pages/Profile/ProfileScreen';
 import { AuthScreen } from './pages/Authentication/AuthScreen';
 import { ReferenceShowcase } from './pages/ReferenceShowcase/ReferenceShowcase';
+import { InstallModal } from './components/pwa/InstallModal';
+import { UpdateNotification } from './components/pwa/UpdateNotification';
+import { OfflineIndicator } from './components/pwa/OfflineIndicator';
+import { usePWA } from './hooks/usePWA';
 
 import {
   Smartphone,
@@ -36,8 +40,13 @@ const MainApp: React.FC = () => {
     viewLayout,
     setViewLayout,
     toasts,
-    dismissToast
+    dismissToast,
+    isInstallModalOpen,
+    setIsInstallModalOpen,
+    showToast
   } = useApp();
+
+  const { isOnline, needRefresh, setNeedRefresh, handleUpdate } = usePWA();
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -45,8 +54,20 @@ const MainApp: React.FC = () => {
   if (viewLayout === 'reference') {
     return (
       <div>
+        <OfflineIndicator isOnline={isOnline} />
         <ReferenceShowcase />
         <FilterModal />
+        <InstallModal
+          isOpen={isInstallModalOpen}
+          onClose={() => setIsInstallModalOpen(false)}
+          onInstalled={() => showToast('AutoHub successfully installed!', 'success')}
+        />
+        {needRefresh && (
+          <UpdateNotification
+            onUpdate={handleUpdate}
+            onDismiss={() => setNeedRefresh(false)}
+          />
+        )}
       </div>
     );
   }
@@ -183,11 +204,29 @@ const MainApp: React.FC = () => {
         )}
       </main>
 
+      {/* PWA Offline Indicator */}
+      <OfflineIndicator isOnline={isOnline} />
+
       {/* Side Navigation Drawer */}
       <SideDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
 
       {/* Advanced Filter Modal */}
       <FilterModal />
+
+      {/* PWA Install Modal */}
+      <InstallModal
+        isOpen={isInstallModalOpen}
+        onClose={() => setIsInstallModalOpen(false)}
+        onInstalled={() => showToast('AutoHub successfully installed!', 'success')}
+      />
+
+      {/* PWA Service Worker Update Notification */}
+      {needRefresh && (
+        <UpdateNotification
+          onUpdate={handleUpdate}
+          onDismiss={() => setNeedRefresh(false)}
+        />
+      )}
 
       {/* Floating Toast Notifications */}
       {toasts.length > 0 && (
